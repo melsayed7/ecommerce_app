@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/style/my_theme.dart';
 import 'package:ecommerce_app/ui/login/login_screen.dart';
 import 'package:ecommerce_app/ui/register/register_screen.dart';
 import 'package:ecommerce_app/ui/splash_screen/splash_screen.dart';
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: MyTheme.lightTheme,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
         RegisterScreen.routeName: (context) => RegisterScreen(),
