@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:ecommerce_app/ui/register/register_screen.dart';
+import 'package:ecommerce_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
     Timer(
       const Duration(seconds: 3),
       () {
-        Navigator.of(context).pushReplacementNamed(RegisterScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       },
     );
     return Image.asset(
