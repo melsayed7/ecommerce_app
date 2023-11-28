@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/core/style/my_color.dart';
+import 'package:ecommerce_app/core/my_color.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {

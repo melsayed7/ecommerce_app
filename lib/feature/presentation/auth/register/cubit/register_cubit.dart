@@ -37,4 +37,14 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
     }
   }
+
+  void toShowPassword() {
+    showPassword = !showPassword;
+    emit(ShowPasswordState());
+  }
+
+  void toShowPasswordConfirm() {
+    showPasswordConfirm = !showPasswordConfirm;
+    emit(ShowPasswordConfirmState());
+  }
 }

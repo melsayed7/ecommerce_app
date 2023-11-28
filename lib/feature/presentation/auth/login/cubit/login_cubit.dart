@@ -27,4 +27,9 @@ class LoginCubit extends Cubit<LoginState> {
       );
     }
   }
+
+  void toShowPassword() {
+    showPassword = !showPassword;
+    emit(ShowPasswordState());
+  }
 }

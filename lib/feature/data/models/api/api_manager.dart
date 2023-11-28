@@ -6,6 +6,7 @@ import 'package:ecommerce_app/core/failures.dart';
 import 'package:ecommerce_app/feature/data/models/api/api_constant.dart';
 import 'package:ecommerce_app/feature/data/models/request/LoginRequest.dart';
 import 'package:ecommerce_app/feature/data/models/request/RegisterRequest.dart';
+import 'package:ecommerce_app/feature/data/models/response/CategoryOrBrandsResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/LoginResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/RegisterResponseDto.dart';
 import 'package:http/http.dart' as http;
@@ -83,6 +84,55 @@ class ApiManager {
         return Left(
           ServerError(
             errorMessage: loginResponse.message,
+          ),
+        );
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'Please Check Your Network !!'));
+    }
+  }
+
+  Future<Either<Failures, CategoryOrBrandsResponseDto>>
+      getAllCategories() async {
+    var url = Uri.https(ApiConstant.baseUrl, ApiConstant.categories);
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var response = await http.get(url);
+      var categoryResponse =
+          CategoryOrBrandsResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(categoryResponse);
+      } else {
+        print(categoryResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: categoryResponse.message,
+          ),
+        );
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'Please Check Your Network !!'));
+    }
+  }
+
+  Future<Either<Failures, CategoryOrBrandsResponseDto>> getAllBrands() async {
+    var url = Uri.https(ApiConstant.baseUrl, ApiConstant.brands);
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var response = await http.get(url);
+      var brandResponse =
+          CategoryOrBrandsResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(brandResponse);
+      } else {
+        print(brandResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: brandResponse.message,
           ),
         );
       }

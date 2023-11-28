@@ -21,3 +21,7 @@ class RegisterErrorState extends RegisterState {
 
   RegisterErrorState({required this.errorMessage});
 }
+
+class ShowPasswordState extends RegisterState {}
+
+class ShowPasswordConfirmState extends RegisterState {}

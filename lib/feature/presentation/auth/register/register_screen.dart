@@ -1,22 +1,17 @@
 import 'package:ecommerce_app/core/di.dart';
-import 'package:ecommerce_app/core/style/my_color.dart';
+import 'package:ecommerce_app/core/my_color.dart';
 import 'package:ecommerce_app/feature/presentation/auth/register/cubit/register_cubit.dart';
 import 'package:ecommerce_app/feature/presentation/auth/register/cubit/register_state.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/custom_elevated_button.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/custom_text.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/custom_text_form_field.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/dialog_utils.dart';
+import 'package:ecommerce_app/feature/presentation/utils/custom_elevated_button.dart';
+import 'package:ecommerce_app/feature/presentation/utils/custom_text.dart';
+import 'package:ecommerce_app/feature/presentation/utils/custom_text_form_field.dart';
+import 'package:ecommerce_app/feature/presentation/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   static const String routeName = 'registerScreen';
 
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
   RegisterCubit viewModel =
       RegisterCubit(registerUseCase: injectRegisterUseCase());
 
@@ -121,9 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined),
                       onPressed: () {
-                        setState(() {
-                          viewModel.showPassword = !viewModel.showPassword;
-                        });
+                        viewModel.toShowPassword();
                       },
                     ),
                     obscureText: viewModel.showPassword,
@@ -146,10 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined),
                       onPressed: () {
-                        setState(() {
-                          viewModel.showPasswordConfirm =
-                              !viewModel.showPasswordConfirm;
-                        });
+                        viewModel.toShowPasswordConfirm();
                       },
                     ),
                     obscureText: viewModel.showPasswordConfirm,
@@ -180,5 +170,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
 }

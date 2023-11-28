@@ -1,24 +1,19 @@
 import 'package:ecommerce_app/core/di.dart';
-import 'package:ecommerce_app/core/style/my_color.dart';
+import 'package:ecommerce_app/core/my_color.dart';
 import 'package:ecommerce_app/feature/presentation/auth/login/cubit/login_cubit.dart';
 import 'package:ecommerce_app/feature/presentation/auth/login/cubit/login_state.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/custom_elevated_button.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/custom_text.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/custom_text_form_field.dart';
-import 'package:ecommerce_app/feature/presentation/widgets/dialog_utils.dart';
+import 'package:ecommerce_app/feature/presentation/utils/custom_elevated_button.dart';
+import 'package:ecommerce_app/feature/presentation/utils/custom_text.dart';
+import 'package:ecommerce_app/feature/presentation/utils/custom_text_form_field.dart';
+import 'package:ecommerce_app/feature/presentation/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../register/register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   static const String routeName = 'loginScreen';
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   LoginCubit viewModel = LoginCubit(loginUseCase: injectLoginUseCase());
 
   @override
@@ -110,9 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined),
                       onPressed: () {
-                        setState(() {
-                          viewModel.showPassword = !viewModel.showPassword;
-                        });
+                        viewModel.toShowPassword();
                       },
                     ),
                     obscureText: viewModel.showPassword,
