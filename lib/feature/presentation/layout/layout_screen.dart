@@ -67,10 +67,12 @@ class LayoutScreen extends StatelessWidget {
                         ? MyColor.whiteColor
                         : Colors.transparent,
                     radius: 20.r,
-                    child: ImageIcon(const AssetImage(MyImages.favoriteIcon),
-                        size: 30.sp),
+                    child: Icon(
+                      Icons.production_quantity_limits,
+                      size: 30.sp,
+                    ),
                   ),
-                  label: 'Favorite',
+                  label: 'Product',
                 ),
                 BottomNavigationBarItem(
                   icon: CircleAvatar(
@@ -78,6 +80,20 @@ class LayoutScreen extends StatelessWidget {
                         ? MyColor.mainColor
                         : MyColor.whiteColor,
                     backgroundColor: cubit.currentIndex == 3
+                        ? MyColor.whiteColor
+                        : Colors.transparent,
+                    radius: 20.r,
+                    child: ImageIcon(const AssetImage(MyImages.favoriteIcon),
+                        size: 30.sp),
+                  ),
+                  label: 'Favorite',
+                ),
+                BottomNavigationBarItem(
+                  icon: CircleAvatar(
+                    foregroundColor: cubit.currentIndex == 4
+                        ? MyColor.mainColor
+                        : MyColor.whiteColor,
+                    backgroundColor: cubit.currentIndex == 4
                         ? MyColor.whiteColor
                         : Colors.transparent,
                     radius: 20.r,

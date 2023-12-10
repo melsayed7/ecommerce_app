@@ -1,8 +1,9 @@
 import 'package:ecommerce_app/core/my_theme.dart';
+import 'package:ecommerce_app/core/shared_pref.dart';
 import 'package:ecommerce_app/feature/presentation/tabs/home/home_screen.dart';
+import 'package:ecommerce_app/feature/presentation/tabs/product/widgets/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feature/presentation/auth/login/login_screen.dart';
 import 'feature/presentation/auth/register/register_screen.dart';
@@ -10,10 +11,23 @@ import 'feature/presentation/layout/layout_screen.dart';
 import 'feature/presentation/splash_screen/splash_screen.dart';
 
 void main() async {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPref.init();
+  var user = SharedPref.getData(key: 'token');
+  String routeName;
+  if (user == null) {
+    routeName = SplashScreen.routeName;
+  } else {
+    routeName = LayoutScreen.routeName;
+  }
+  runApp(MyApp(routeName));
 }
 
 class MyApp extends StatelessWidget {
+  String routeName;
+
+  MyApp(this.routeName, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -30,17 +44,22 @@ class MyApp extends StatelessWidget {
             LoginScreen.routeName: (_) => LoginScreen(),
             LayoutScreen.routeName: (_) => LayoutScreen(),
             HomeScreen.routeName: (_) => HomeScreen(),
+            ProductDetails.routeName: (_) => ProductDetails(),
           },
-          initialRoute: LayoutScreen.routeName,
+          initialRoute: routeName,
         );
       },
     );
   }
 }
 
-void initSharedPref() async {
-  var prefs = await SharedPreferences.getInstance();
-  var userToken = prefs.getString('token');
-  //userProvider.updateToken(userToken!);
-  print("userToken = $userToken");
-}
+// void initSharedPref() async {
+//   await SharedPref.init();
+//   var user = SharedPref.getData(key: 'token');
+//   String routeName ;
+//   if(user == null){
+//     routeName = LoginScreen.routeName;
+//   }else{
+//     routeName = LayoutScreen.routeName;
+//   }
+// }

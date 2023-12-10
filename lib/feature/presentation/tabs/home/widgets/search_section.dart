@@ -18,10 +18,7 @@ class SearchSection extends StatelessWidget {
                   color: MyColor.textColor,
                 ),
               ),
-              prefixIcon: Icon(
-                Icons.search_rounded,
-                color: MyColor.textColor,
-              ),
+              prefixIcon: Image.asset(MyImages.search),
               hintText: 'what do you search for?',
             ),
           ),

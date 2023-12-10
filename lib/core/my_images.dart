@@ -7,5 +7,9 @@ class MyImages {
   static const String property2 = 'assets/images/Property2.png';
   static const String property3 = 'assets/images/Property3.png';
   static const String shopCart = 'assets/images/shopping_cart.png';
+  static const String search = 'assets/images/search.png';
   static const String smallLogo = 'assets/images/small_logo.png';
+  static const String poster = 'assets/images/poster.png';
+  static const String star = 'assets/images/star.png';
+  static const String shose = 'assets/images/shose.png';
 }
