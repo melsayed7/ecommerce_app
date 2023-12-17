@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/core/failures.dart';
+import 'package:ecommerce_app/feature/domain/entities/AddToCartEntity.dart';
 import 'package:ecommerce_app/feature/domain/entities/ProductResponseEntity.dart';
 
 abstract class ProductState {}
@@ -21,4 +22,22 @@ class ProductSuccessState extends ProductState {
   ProductResponseEntity productResponseEntity;
 
   ProductSuccessState({required this.productResponseEntity});
+}
+
+class AddToCartLoadingState extends ProductState {
+  String? loadingMessage;
+
+  AddToCartLoadingState({required this.loadingMessage});
+}
+
+class AddToCartErrorState extends ProductState {
+  Failures error;
+
+  AddToCartErrorState({required this.error});
+}
+
+class AddToCartSuccessState extends ProductState {
+  AddToCartResponseEntity addToCartResponseEntity;
+
+  AddToCartSuccessState({required this.addToCartResponseEntity});
 }

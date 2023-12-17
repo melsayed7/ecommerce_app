@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/failures.dart';
 import 'package:ecommerce_app/feature/domain/entities/ProductResponseEntity.dart';
-import 'package:ecommerce_app/feature/domain/repositories/repository/home_repository_contract.dart';
+import 'package:ecommerce_app/feature/domain/repositories/repository/product_repositry_contract.dart';
 
 class GetProductsUseCase {
-  HomeRepositoryContract homeRepositoryContract;
+  ProductRepositoryContract productRepositoryContract;
 
-  GetProductsUseCase({required this.homeRepositoryContract});
+  GetProductsUseCase({required this.productRepositoryContract});
 
   Future<Either<Failures, ProductResponseEntity>> invoke() {
-    return homeRepositoryContract.getProducts();
+    return productRepositoryContract.getProducts();
   }
 }

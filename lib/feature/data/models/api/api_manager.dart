@@ -7,6 +7,7 @@ import 'package:ecommerce_app/core/shared_pref.dart';
 import 'package:ecommerce_app/feature/data/models/api/api_constant.dart';
 import 'package:ecommerce_app/feature/data/models/request/LoginRequest.dart';
 import 'package:ecommerce_app/feature/data/models/request/RegisterRequest.dart';
+import 'package:ecommerce_app/feature/data/models/response/AddToCartResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/CategoryOrBrandsResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/GetAllSubCategoriesOnCategoryResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/LoginResponseDto.dart';
@@ -145,6 +146,33 @@ class ApiManager {
     }
   }
 
+  Future<Either<Failures, GetAllSubCategoriesOnCategoryResponseDto>>
+      getSubCategories(String categoryID) async {
+    var url = Uri.https(ApiConstant.baseUrl,
+        '${ApiConstant.categories}/$categoryID/subcategories');
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var response = await http.get(url);
+      var subCategoriesResponse =
+          GetAllSubCategoriesOnCategoryResponseDto.fromJson(
+              jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(subCategoriesResponse);
+      } else {
+        print(subCategoriesResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: subCategoriesResponse.message,
+          ),
+        );
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'Please Check Your Network !!'));
+    }
+  }
+
   Future<Either<Failures, ProductResponseDto>> getProducts() async {
     var url = Uri.https(ApiConstant.baseUrl, ApiConstant.products);
 
@@ -169,25 +197,33 @@ class ApiManager {
     }
   }
 
-  Future<Either<Failures, GetAllSubCategoriesOnCategoryResponseDto>>
-      getSubCategories(String categoryID) async {
-    var url = Uri.https(ApiConstant.baseUrl,
-        '${ApiConstant.categories}/$categoryID/subcategories');
+  Future<Either<Failures, AddToCartResponseDto>> addToCart(
+      String productId) async {
+    var url = Uri.https(ApiConstant.baseUrl, ApiConstant.addToCart);
 
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      var response = await http.get(url);
-      var subCategoriesResponse =
-          GetAllSubCategoriesOnCategoryResponseDto.fromJson(
-              jsonDecode(response.body));
+      var response = await http.post(
+        url,
+        body: {"productId": productId},
+        headers: {"token": SharedPref.getData(key: 'token').toString()},
+      );
+      var addToCartResponse =
+          AddToCartResponseDto.fromJson(jsonDecode(response.body));
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Right(subCategoriesResponse);
-      } else {
-        print(subCategoriesResponse.message);
+        return Right(addToCartResponse);
+      } else if (response.statusCode == 401) {
         return Left(
           ServerError(
-            errorMessage: subCategoriesResponse.message,
+            errorMessage: addToCartResponse.message,
+          ),
+        );
+      } else {
+        print(addToCartResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: addToCartResponse.message,
           ),
         );
       }

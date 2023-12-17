@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/my_color.dart';
 import 'package:ecommerce_app/core/my_images.dart';
 import 'package:ecommerce_app/feature/domain/entities/ProductResponseEntity.dart';
+import 'package:ecommerce_app/feature/presentation/tabs/product/cubit/product_cubit.dart';
 import 'package:ecommerce_app/feature/presentation/tabs/product/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,7 +74,9 @@ class CustomProductItem extends StatelessWidget {
               Image.asset(MyImages.star),
               const Spacer(flex: 1),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  ProductCubit.get(context).addToCart(productEntity.id ?? '');
+                },
                 splashColor: Colors.transparent,
                 child: Icon(
                   Icons.add_circle,

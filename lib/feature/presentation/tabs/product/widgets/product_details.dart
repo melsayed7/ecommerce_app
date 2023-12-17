@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/my_color.dart';
 import 'package:ecommerce_app/core/my_images.dart';
 import 'package:ecommerce_app/feature/domain/entities/ProductResponseEntity.dart';
+import 'package:ecommerce_app/feature/presentation/tabs/product/widgets/cart_screen.dart';
 import 'package:ecommerce_app/feature/presentation/tabs/product/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -32,6 +33,7 @@ class ProductDetails extends StatelessWidget {
           fontWeight: FontWeight.w500,
           color: MyColor.textColor,
         ),
+        centerTitle: true,
         actions: [
           GestureDetector(
             onTap: () {},
@@ -41,7 +43,7 @@ class ProductDetails extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 20.w,
+            width: 32.w,
           ),
           GestureDetector(
             onTap: () {},
@@ -268,7 +270,7 @@ class ProductDetails extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(routeName);
+                      Navigator.of(context).pushNamed(CartScreen.routeName);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: MyColor.mainColor,
