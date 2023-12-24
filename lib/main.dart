@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             LayoutScreen.routeName: (_) => LayoutScreen(),
             HomeScreen.routeName: (_) => HomeScreen(),
             ProductDetails.routeName: (_) => const ProductDetails(),
-            CartScreen.routeName: (_) => const CartScreen(),
+            CartScreen.routeName: (_) => CartScreen(),
           },
           initialRoute: routeName,
         );

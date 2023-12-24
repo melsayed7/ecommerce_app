@@ -10,6 +10,7 @@ import 'package:ecommerce_app/feature/data/models/request/RegisterRequest.dart';
 import 'package:ecommerce_app/feature/data/models/response/AddToCartResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/CategoryOrBrandsResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/GetAllSubCategoriesOnCategoryResponseDto.dart';
+import 'package:ecommerce_app/feature/data/models/response/GetCartResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/LoginResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/ProductResponseDto.dart';
 import 'package:ecommerce_app/feature/data/models/response/RegisterResponseDto.dart';
@@ -224,6 +225,104 @@ class ApiManager {
         return Left(
           ServerError(
             errorMessage: addToCartResponse.message,
+          ),
+        );
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'Please Check Your Network !!'));
+    }
+  }
+
+  Future<Either<Failures, GetCartResponseDto>> getCart() async {
+    var url = Uri.https(ApiConstant.baseUrl, ApiConstant.addToCart);
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var response = await http.get(
+        url,
+        headers: {"token": SharedPref.getData(key: 'token').toString()},
+      );
+      var getCartResponse =
+          GetCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(getCartResponse);
+      } else {
+        print(getCartResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: getCartResponse.message,
+          ),
+        );
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'Please Check Your Network !!'));
+    }
+  }
+
+  Future<Either<Failures, GetCartResponseDto>> removeCartItem(
+      String productId) async {
+    var url =
+        Uri.https(ApiConstant.baseUrl, '${ApiConstant.addToCart}/$productId');
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var response = await http.delete(
+        url,
+        headers: {"token": SharedPref.getData(key: 'token').toString()},
+      );
+      var removeCartItemResponse =
+          GetCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(removeCartItemResponse);
+      } else if (response.statusCode == 401) {
+        return Left(
+          ServerError(
+            errorMessage: removeCartItemResponse.message,
+          ),
+        );
+      } else {
+        print(removeCartItemResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: removeCartItemResponse.message,
+          ),
+        );
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'Please Check Your Network !!'));
+    }
+  }
+
+  Future<Either<Failures, GetCartResponseDto>> updateCountCartItem(
+      String productId, int count) async {
+    var url =
+        Uri.https(ApiConstant.baseUrl, '${ApiConstant.addToCart}/$productId');
+
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var response = await http.put(
+        url,
+        body: {"count": "$count"},
+        headers: {"token": SharedPref.getData(key: 'token').toString()},
+      );
+      var updateCountCartItemResponse =
+          GetCartResponseDto.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Right(updateCountCartItemResponse);
+      } else if (response.statusCode == 401) {
+        return Left(
+          ServerError(
+            errorMessage: updateCountCartItemResponse.message,
+          ),
+        );
+      } else {
+        print(updateCountCartItemResponse.message);
+        return Left(
+          ServerError(
+            errorMessage: updateCountCartItemResponse.message,
           ),
         );
       }

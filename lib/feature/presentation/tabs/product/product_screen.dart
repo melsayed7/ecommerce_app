@@ -14,8 +14,12 @@ class ProductScreen extends StatelessWidget {
   ProductScreen({Key? key}) : super(key: key);
 
   ProductCubit cubit = ProductCubit(
-      getProductsUseCase: injectGetProductsUseCase(),
-      addToCartUseCase: injectAddToCartUseCase());
+    getProductsUseCase: injectGetProductsUseCase(),
+    addToCartUseCase: injectAddToCartUseCase(),
+    getCartUseCase: injectGetCartUseCase(),
+    removeCartItemUseCase: injectRemoveCartItemUseCase(),
+    updateCountCartItemUseCase: injectUpdateCountCartItemUseCase(),
+  );
 
   @override
   Widget build(BuildContext context) {

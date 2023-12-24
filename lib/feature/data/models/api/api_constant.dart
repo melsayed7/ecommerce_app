@@ -4,6 +4,8 @@
 //https://ecommerce.routemisr.com/api/v1/products
 //https://ecommerce.routemisr.com/api/v1/categories/6439d2f467d9aa4ca97064a8/subcategories
 //https://ecommerce.routemisr.com/api/v1/cart
+//https://ecommerce.routemisr.com/api/v1/cart
+//https://ecommerce.routemisr.com/api/v1/cart/623687991e11acc3ecae3ace
 class ApiConstant {
   static const String baseUrl = 'ecommerce.routemisr.com';
   static const String register = '/api/v1/auth/signup';

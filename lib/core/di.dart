@@ -17,8 +17,11 @@ import 'package:ecommerce_app/feature/domain/repositories/repository/subCategori
 import 'package:ecommerce_app/feature/domain/use_cases/add_to_cart_use_case.dart';
 import 'package:ecommerce_app/feature/domain/use_cases/get_all_brands_use_case.dart';
 import 'package:ecommerce_app/feature/domain/use_cases/get_all_categories_use_case.dart';
+import 'package:ecommerce_app/feature/domain/use_cases/get_cart_use_case.dart';
 import 'package:ecommerce_app/feature/domain/use_cases/get_products_use_case.dart';
 import 'package:ecommerce_app/feature/domain/use_cases/register_use_case.dart';
+import 'package:ecommerce_app/feature/domain/use_cases/remove_cart_item_use_case.dart';
+import 'package:ecommerce_app/feature/domain/use_cases/update_count_cart_item_use_case.dart';
 
 import '../feature/domain/repositories/data_sources/product_remote_data_source.dart';
 import '../feature/domain/use_cases/get_all_subCategories_on_category_use_case.dart';
@@ -62,7 +65,7 @@ HomeRemoteDataSource injectHomeRemoteDataSource() {
   return HomeRemoteDataSourceImpl(apiManager: ApiManager.getInstance());
 }
 
-/// product and add to cart
+/// product and add , get , remove cart
 
 GetProductsUseCase injectGetProductsUseCase() {
   return GetProductsUseCase(
@@ -71,6 +74,21 @@ GetProductsUseCase injectGetProductsUseCase() {
 
 AddToCartUseCase injectAddToCartUseCase() {
   return AddToCartUseCase(
+      productRepositoryContract: injectProductRepositoryContract());
+}
+
+GetCartUseCase injectGetCartUseCase() {
+  return GetCartUseCase(
+      productRepositoryContract: injectProductRepositoryContract());
+}
+
+RemoveCartItemUseCase injectRemoveCartItemUseCase() {
+  return RemoveCartItemUseCase(
+      productRepositoryContract: injectProductRepositoryContract());
+}
+
+UpdateCountCartItemUseCase injectUpdateCountCartItemUseCase() {
+  return UpdateCountCartItemUseCase(
       productRepositoryContract: injectProductRepositoryContract());
 }
 
